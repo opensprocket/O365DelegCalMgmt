@@ -19,4 +19,6 @@ This utility is a standalone PowerShell script that presents a TUI to the user. 
 - When changes are finished, type exit
 - The utility will attempt to close the O365 session, however you can do this manually if you type `Get-PSSession` and remove the correct session ID using `Remove-PSSession`
 
-## 
+## Additional Notes
+
+If your O365 environment requires using a different URI to connect to it (such as Government, Germany, etc.), this will not work out of the box for you. You'll need to edit the Start-O365 function to use the correct URI. Check the Microsoft documentation for more details on this. 
