@@ -1,9 +1,15 @@
 # O365DelegCalMgmt
-Tool to manage delegate access to Office 365 calendars written in PowerShell. 
 
 ## Overview
 
 This utility is a standalone PowerShell script that presents a TUI to the user. Built around Microsoft Office 365 PowerShell cmdlets, its purpose is to simplify delegated calendar management. It takes a frequent 5 minute task and accomplishes it in 5 seconds. As usual, here's the [relevant xkcd.](https://xkcd.com/1205/)
+
+## Requirements
+
+Since Microsoft has begun phasing out basic authentication to Office 365 tenants, it is necessary to use the new "Modern Authentication". This method requires a working web browser to sign in to your O365 tenant. In addition that, PowerShell 7 is now required by the EXO-V2 module provided by Microsoft. Make sure to execute this script from the v7 shell window - otherwise it will not work!
+
+- Get PowerShell 7+ from here: [PowerShell Documentation](https://docs.microsoft.com/en-us/powershell/)
+- EXO v2 Module documentation: [https://docs.microsoft.com/en-us/powershell/exchange/exchange-online-powershell-v2?view=exchange-ps](https://docs.microsoft.com/en-us/powershell/exchange/exchange-online-powershell-v2?view=exchange-ps)
 
 ## How it works:
 - Open PowerShell prompt, navigate to directory that contains the script and execute `.\Manage-DelegateCalendarPermissions.ps1`

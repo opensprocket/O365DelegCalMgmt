@@ -1,3 +1,6 @@
+# Last updated 10 Jan 2022
+# Requires Powershell 7 - will not work otherwise!
+
 # Global Variables
 [bool]$continue = $true
 
@@ -26,21 +29,21 @@ function Remove-CalendarDelegatePermission($Identity, $DelegateIdentity) {
     
 }
 
-function Start-O365Connection {
-    Write-Host -Object "Connecting to Office 365..." -ForegroundColor Green -BackgroundColor Black
-    Write-Host -Object "Make sure to use yourname@yourdomain.com for the username!" -ForegroundColor Green -BackgroundColor Black
-    try {
-      $UserCredential = Get-Credential
-      $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
-      Import-PSSession $Session -AllowClobber
-    }
-    catch {
-      Write-Host $_
-      Write-Host -Object "Unable to connect to O365. Please make sure you have administrator rights in Exchange Online before attempting to use this again." -ForegroundColor Green -BackgroundColor Black
-      
+Function Start-O365ConnectionModernAuth {
+    # Inform user of prerequisites if applicable
+    if ($psversiontable.PSVersion -lt 7) {
+      Write-Host -Object "Requires Powershell 7 or newer!" -ForegroundColor Green -BackgroundColor Black
+      Write-Host -Object "Requires the Exchange Online Management Powershell Module!" -ForegroundColor Green -BackgroundColor Black
+      Write-Host -Object "Connection aborted." -ForegroundColor Green -BackgroundColor Black
     }
     
-  }
+    # Pass the version check, import the module
+    else {
+      Import-Module ExchangeOnlineManagement
+      $username = Read-Host -Prompt "Please input your full email address"
+      Connect-ExchangeOnline -UserPrincipalName $username
+    } 
+}
   
 function Stop-O365Connection {
     # Write-Host -Object "Which session do you want to disconnect?" -ForegroundColor Green -BackgroundColor Black
@@ -68,7 +71,7 @@ function Show-CommandMenu {
 # Begin TUI
 
 # Start O365 Connection
-Start-O365Connection
+Start-O365ConnectionModernAuth
 Clear-Host
 
 # Loop until terminated
@@ -160,3 +163,5 @@ do {
     }
 
 } while ($continue)
+
+## Created by opensprocket ##
